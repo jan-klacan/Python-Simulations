@@ -32,7 +32,7 @@ def get_value_input(prompt, default_value) :
 def main_cycle() :
     
     global initial_tree_coverage, initial_lake_coverage
-    global tree_grow_chance, spontaneous_fire_chance_pine, spontaneous_fire_chance_oak
+    global tree_growth_chance, spontaneous_fire_chance_pine, spontaneous_fire_chance_oak
     global catch_fire_from_spreading_chance_pine, catch_fire_from_spreading_chance_oak
     global pause_length
     
@@ -46,7 +46,7 @@ def main_cycle() :
     bext.fg("reset")
     initial_tree_coverage = get_value_input("Enter initial tree coverage in the forest (%, 0 - 100): ", 2)  
     initial_lake_coverage = get_value_input("Enter initial lake coverage in the forest (%, 0 - 100): ", 0.3)  
-    tree_grow_chance = get_value_input("Enter tree growth probability at each iteration (%, 0 - 100): ", 0.75)
+    tree_growth_chance = get_value_input("Enter tree growth probability at each iteration (%, 0 - 100): ", 0.75)
     spontaneous_fire_chance_pine = get_value_input("Enter probability that a pine tree will catch fire spontanenously at each iteration (%, 0 - 100): ", 0.5)
     spontaneous_fire_chance_oak = get_value_input("Enter probability that an oak tree will catch fire spontaneously at each iteration (%, 0 - 100): ", 0.5) 
     catch_fire_from_spreading_chance_pine = get_value_input("Enter probability that a pine tree will catch fire from a neighboring burning tree at each iteration (%, 0 - 100): ", 75) 
@@ -55,7 +55,7 @@ def main_cycle() :
     
     initial_tree_coverage /= 100
     initial_lake_coverage /= 100
-    tree_grow_chance /= 100 
+    tree_growth_chance /= 100 
     spontaneous_fire_chance_pine /= 100 
     spontaneous_fire_chance_oak /= 100
     catch_fire_from_spreading_chance_pine /= 100
@@ -75,7 +75,7 @@ def main_cycle() :
                 if (x,y) in nextForest :  
                     continue  
                 if ((forest[(x,y)] == empty)  
-                    and (random.random() <= tree_grow_chance)) :  
+                    and (random.random() <= tree_growth_chance)) :  
                     nextForest[(x,y)] = random.choice([pine_tree, oak_tree])  
                 elif ((forest[(x,y)] == pine_tree)  
                     and (random.random() <= spontaneous_fire_chance_pine)) :  
@@ -148,7 +148,7 @@ def displayForest(forest) :
     bext.fg("red")
     print("Fire")
     bext.fg("reset")
-    print("Tree grow probability: {}% ".format(tree_grow_chance*100))  
+    print("Tree growth probability: {}% ".format(tree_growth_chance*100))  
     print("Probability of catching fire spontaneously - pine: {}% ".format(spontaneous_fire_chance_pine*100))
     print("Probability of catching fire spontaneously - oak: {}% ".format(spontaneous_fire_chance_oak*100))
     print("Probability that a pine tree will catch fire from a neighboring burning tree: {}% ".format(catch_fire_from_spreading_chance_pine*100))
